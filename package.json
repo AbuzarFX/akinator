@@ -10,7 +10,9 @@
   "license": "Apache2.0",
   "dependencies": {
     "aki-api": "^5.2.1",
+    "common-tags": "^1.8.0",
     "discord.js": "^12.5.1",
+    "os": "^0.1.1",
     "quick.db": "^7.1.3"
   }
 }
