@@ -13,11 +13,7 @@ module.exports = {
 		acessableby: 'everyone'
 	},
 	run: async (bot, message, args, ops) => {
-		const embed = new MessageEmbed()
-		.setColor("GOLD")
-		.setDescription(`This command can only be used in channels marked NSFW.`)
 
-		if(!message.channel.nsfw) return message.channel.send(embed);
 		if (!message.channel.permissionsFor(bot.user).has('EMBED_LINKS')) return message.channel.send('**Missing Permissions - [EMBED_LINKS]!**');
 		if (!args[0]) return message.channel.send(`**What Category Do You Want To Use? Either \`${list(regions, 'or')}\`!**`);
 		let stringAki = args[0].toLowerCase();
