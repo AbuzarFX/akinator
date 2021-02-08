@@ -16,6 +16,7 @@ const { Client, Collection, MessageEmbed } = require("discord.js")
 const bot = new Client();
 const { PREFIX, TOKEN } = require("./config")
 const db = require("quick.db")
+const DBL = require("dblapi.js");
 
 //Defining Collections
 bot.commands = new Collection();
@@ -24,7 +25,14 @@ bot.aliases = new Collection();
 //Importing and setting collections for Command names and aliases
 ["commands", "aliases"].forEach(x => bot[x] = new Collection());
 ["command", "event"].forEach(x => require(`./handler/${x}`)(bot));
+const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwNDc4OTI5MDEzOTM4NTg4NyIsImJvdCI6dHJ1ZSwiaWF0IjoxNjEyNzk2MjEyfQ.tiKnJkYnuyY7r2T8Q7grtD_RiNfVSFWkrJzCx5I6msM', bot);
+dbl.on('posted', () => {
+  console.log('Server count posted!');
+})
 
+dbl.on('error', e => {
+ console.log(`Oops! ${e}`);
+})
 bot.on("message", async message => {
     
     //Prefix fetching for each guild to support multi guild changeable prefix
