@@ -7,7 +7,7 @@ module.exports = {
     },
     run: async (bot, msg, args) => {
         
-        msg.channel.send(`<:defi1:804797586438357003> Bot ping: **${bot.ws.ping}ms**`);
+        msg.channel.send(`<:defi1:804797586438357003>Bot ping: **${bot.ws.ping}ms**`);
 
     }
 

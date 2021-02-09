@@ -17,7 +17,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
         .setColor("GOLD")
-        .setDescription(`Invite Akinator with the help of this [link](https://discord.com/api/oauth2/authorize?client_id=804789290139385887&permissions=8&scope=bot).`)
+        .setDescription(`Invite Akinator with the help of this [link](https://discord.com/oauth2/authorize?client_id=804789290139385887&permissions=8&scope=applications.commands%20bot).`)
         .setImage("https://cdn.hipwallpaper.com/i/65/71/iZh16N.jpg")
 
         message.channel.send(embed)
