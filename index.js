@@ -76,8 +76,6 @@ bot.on("guildCreate", guild => {
   
     const channel = bot.channels.cache.get(ID);
   
-    const sowner = guild.owner.user;
-  
     if (!channel) return;
   
     const embed = new MessageEmbed()
@@ -87,10 +85,6 @@ bot.on("guildCreate", guild => {
       .addField(`Server Name:`, `\`\`\`${guild.name}\`\`\``, true)
   
       .addField(`Server ID:`, `\`\`\`${guild.id}\`\`\``, true)
-  
-      .addField(`Server owner:`, `\`\`\`${sowner.tag}\`\`\``, true)
-  
-      .addField(`owner ID:`, `\`\`\`${sowner.id}\`\`\``, true)
    
       .addField(`Created on:`, `\`\`\`${guild.createdAt}\`\`\``, true)
     
