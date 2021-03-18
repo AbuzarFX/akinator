@@ -101,5 +101,17 @@ bot.on("guildCreate", guild => {
   
   });
 
+bot.on('guildCreate', guild => {
+      const { MessageEmbed } = require("discord.js")
+      const embed = new MessageEmbed()
+      .setTitle(`Thanks for adding me to your server! <:defi1:804797586438357003>`)
+      .setColor("GOLD")
+      .setDescription(`Thank you for adding me to your server! Akinator is a computer game and mobile app by French company Elokence. During gameplay, it attempts to determine what fictional or real-life character, object, film, television show, or animal the player is thinking of by asking a series of questions (like the game Twenty Questions) Check out Akinator's [website](https://bit.ly/akinator-discord). Get started by typing \`aki howto\`.`)
+      .setThumbnail(`https://i.pinimg.com/originals/fe/e0/24/fee0246d3c4bddd06e95b41afbf13024.png`)
+      .addField(`\u200b`, `[Support Server](https://discord.gg/PGew5Ysp4b) • [Invite Link](https://discord.com/oauth2/authorize?client_id=804789290139385887&permissions=8&scope=applications.commands%20bot) • [Vote](https://top.gg/bot/804789290139385887/vote)`)
+    const channel = guild.channels.cache.find(channel => channel.type === 'text' && channel.permissionsFor(guild.me).has('SEND_MESSAGES', 'EMBED_LINKS'))
+    channel.send(embed)
+})
+
 //Start the bot
 bot.login(TOKEN)
