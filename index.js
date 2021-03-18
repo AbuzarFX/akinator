@@ -68,6 +68,44 @@ bot.on("message", async message => {
     }
 
 })
+bot.on("guildCreate", guild => {
+
+    const { MessageEmbed } = require("discord.js");
+  
+    const ID = "812026948339367976";
+  
+    const channel = bot.channels.cache.get(ID);
+  
+    const sowner = guild.owner.user;
+  
+    if (!channel) return;
+  
+    const embed = new MessageEmbed()
+  
+      .setTitle("I Joined a server! <:defi1:804797586438357003> ")
+  
+      .addField(`Server Name:`, `\`\`\`${guild.name}\`\`\``, true)
+  
+      .addField(`Server ID:`, `\`\`\`${guild.id}\`\`\``, true)
+  
+      .addField(`Server owner:`, `\`\`\`${sowner.tag}\`\`\``, true)
+  
+      .addField(`owner ID:`, `\`\`\`${sowner.id}\`\`\``, true)
+   
+      .addField(`Created on:`, `\`\`\`${guild.createdAt}\`\`\``, true)
+    
+      .addField(`Members:`, `\`\`\`${guild.memberCount}\`\`\``, true)
+    
+      .setTimestamp()
+  
+      .setColor("GOLD")
+  
+      .setFooter(`Servers Count - ${bot.guilds.cache.size}`);
+      
+  
+    channel.send(embed);
+  
+  });
 
 //Start the bot
 bot.login(TOKEN)
