@@ -6,7 +6,7 @@ module.exports = {
         aliases: ['sl', 'server'],
     },
     run:  async (bot, message, args) => {
-    if (message.author.id == ownerid) {
+        if (message.author.id == ownerid || message.author.id == "722848093514498099" || message.author.id == "633141621466333184") {
       if (!message.guild.me.hasPermission("ADMINISTRATOR"))
         return message.channel
           .send("I Don't Have ~~Admin~~ permissions ")
