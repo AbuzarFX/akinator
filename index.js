@@ -25,7 +25,7 @@ bot.aliases = new Collection();
 //Importing and setting collections for Command names and aliases
 ["commands", "aliases"].forEach(x => bot[x] = new Collection());
 ["command", "event"].forEach(x => require(`./handler/${x}`)(bot));
-const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwNDc4OTI5MDEzOTM4NTg4NyIsImJvdCI6dHJ1ZSwiaWF0IjoxNjE2NDIyMjEyfQ.ziHE1s76eVhRwpAA-cEuv7K6GzR01qegJIZExxgwGXg', bot);
+const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwNDc4OTI5MDEzOTM4NTg4NyIsImJvdCI6dHJ1ZSwiaWF0IjoxNjE2NDIyOTE1fQ.REbAxXnWvoowR593-rg55U8qC41RoLURXk96Q-ZPPiE', bot);
 dbl.on('posted', () => {
   console.log('Server count posted!');
 })
