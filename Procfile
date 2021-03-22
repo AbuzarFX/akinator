@@ -1,1 +1,1 @@
-Worker: node shard.js
+Worker: node index.js
