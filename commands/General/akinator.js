@@ -14,7 +14,7 @@ module.exports = {
 	},
 	run: async (bot, message, args, ops) => {
 		if (!message.channel.permissionsFor(bot.user).has('EMBED_LINKS')) return message.channel.send('**Missing Permissions - [EMBED LINKS]!**');
-		if (!args[0]) return message.channel.send(`**What Category Do You Want To Use? Either \`${list(regions, 'or')}\`!**`);
+		if (!args[0]) return message.channel.send(`**What Category Do You Want To Use? Either \`${list(regions, 'or')}\`!**\n\n**Example:** \`aki aki [person/object/animal]\``);
 		let stringAki = args[0].toLowerCase();
 		let region;
 		if (stringAki === 'person'.toLocaleLowerCase()) region = 'en';
