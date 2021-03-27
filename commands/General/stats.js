@@ -15,7 +15,10 @@ module.exports = {
             .then(results => {
                 const totalGuilds = results[0].reduce((acc, guildCount) => acc + guildCount, 0);
                 const totalMembers = results[1].reduce((acc, memberCount) => acc + memberCount, 0);
-                return message.channel.send(`> Server count: ${totalGuilds} servers\n> Member count: ${totalMembers} members`);
+                return message.channel.send({ embed: {
+                    color: "GOLD",
+                    description: `> Server count: \`${totalGuilds}\` servers\n> Member count: \`${totalMembers}\` members`
+                }})
             })
             .catch(console.error);
 
