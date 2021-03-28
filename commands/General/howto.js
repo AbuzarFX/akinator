@@ -39,6 +39,7 @@ module.exports = {
         .setColor(`GOLD`)
         .setDescription("**NEW!** To set Akinator's language to something other than english, use the command \`aki lang [full name of the language]\`")
         .addField(`• Usage`, `\`aki lang spanish\``)
+        .setImage(`https://i.imgur.com/wKRnYNK.jpg`)
         .setTimestamp()
 
         const pages = [
