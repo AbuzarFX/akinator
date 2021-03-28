@@ -1,6 +1,8 @@
 const { MessageEmbed } = require("discord.js");
 const os = require('os')
+const moment = require("moment")
 
+require("moment-duration-format");
 module.exports = {
     config: {
         name: "bot-info",
@@ -11,7 +13,12 @@ module.exports = {
         accessableby: "everyone"
     },
     run: async (bot, message, args) => {
+        const promises = await bot.shard.broadcastEval(`[this.shard.ids[0], this.guilds.cache.size, this.guilds.cache.reduce((prev, guild) => prev + guild.memberCount, 0), this.channels.cache.size, this.uptime, process.memoryUsage().heapUsed]`);
+        let finale = "";
 
+        promises.forEach((value) => {
+             finale += `\`Shard ${value[0]}:\`\n> Server Count: **${value[1].toLocaleString()}** | Users: **${value[2].toLocaleString()}** | Channels: **${value[3].toLocaleString()}** | Uptime: **${moment.duration(value[4]).format("d:hh:mm:ss")}** | Memory Usage: **${formatBytes(value[5])}**\n\n`;
+        });
 
 
 
@@ -19,50 +26,18 @@ const embed = new MessageEmbed()
             .setThumbnail(bot.user.displayAvatarURL())
             .setTitle('Bot Stats')
             .setColor('GOLD')
-            .addFields(
-                {
-                    name: '🌐 Servers',
-                    value: `Serving ${bot.guilds.cache.size} servers.`,
-                    inline: true
-                },
-                {
-                    name: '📺 Channels',
-                    value: `Serving ${bot.channels.cache.size} channels.`,
-                    inline: true
-                },
-                {
-                    name: '👥 Server Users',
-                    value: `Serving ${bot.users.cache.size}`,
-                    inline: true
-                },
-                {
-                    name: '⏳ Ping',
-                    value: `${Math.round(bot.ws.ping)}ms`,
-                    inline: true
-                },
-                {
-                    name: 'Join Date',
-                    value: bot.user.createdAt,
-                    inline: true
-                },
-                {
-                    name: 'Server Info',
-                    value: `Cores: ${os.cpus().length}`,
-                    inline: true
-                },
-                {
-                    name: 'Node Version',
-                    value: process.version,
-                    inline: true
-                },
-                {
-                    name: 'Memory Usage',
-                    value: `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB`,
-                    inline: true
-                },
-
-            )
+            .setDescription(finale)
             .setFooter(`Requested By: ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true}))
+
+            function formatBytes(a, b) {
+                if (0 == a) return "0 Bytes";
+                let c= 1024;
+                let d = b || 2;
+                let e = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+                let f = Math.floor(Math.log(a) / Math.log(c));
+    
+                return parseFloat((a / Math.pow(c, f)).toFixed(d)) + " " + e[f];
+            };
 
         await message.channel.send(embed)
 
