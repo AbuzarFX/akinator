@@ -23,11 +23,9 @@ module.exports = {
 
 
 const embed = new MessageEmbed()
-            .setThumbnail(bot.user.displayAvatarURL())
-            .setTitle('Bot Stats')
+            .setTitle('Bot Shard Stats')
             .setColor('GOLD')
             .setDescription(finale)
-            .setFooter(`Requested By: ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true}))
 
             function formatBytes(a, b) {
                 if (0 == a) return "0 Bytes";
