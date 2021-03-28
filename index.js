@@ -1,21 +1,8 @@
-// Copyright 2020 ManavvGarg <https://github.com/ManavvGarg/>
-// 
-// Licensed under the Apache License, Version 2.0(the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-// http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-//     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 const { Client, Collection, MessageEmbed } = require("discord.js")
 const bot = new Client();
 const { PREFIX, TOKEN } = require("./config")
 const db = require("quick.db")
+const translate = require("@iamtraction/google-translate")
 const DBL = require("dblapi.js");
 
 //Defining Collections
@@ -68,6 +55,20 @@ bot.on("message", async message => {
     }
 
 })
+
+
+bot.translate = async(text, message) => {
+
+        
+        const lang = await db.has(`lang-${message.guild.id}`) ? db.get(`lang-${message.guild.id}`) : 'en';
+        const translated = await translate(text, {from: 'en', to: lang})
+        return translated.text;
+        
+}
+
+
+
+
 bot.on("guildCreate", guild => {
 
     const { MessageEmbed } = require("discord.js");
@@ -80,7 +81,7 @@ bot.on("guildCreate", guild => {
   
     const embed = new MessageEmbed()
   
-      .setTitle("I Joined a server! <:defi1:804797586438357003> ")
+      .setTitle("I Joined a server!<:defi1:804797586438357003> ")
   
       .addField(`Server Name:`, `\`\`\`${guild.name}\`\`\``, true)
   
@@ -104,7 +105,7 @@ bot.on("guildCreate", guild => {
 bot.on('guildCreate', guild => {
       const { MessageEmbed } = require("discord.js")
       const embed = new MessageEmbed()
-      .setTitle(`Thanks for adding me to your server! <:defi1:804797586438357003>`)
+      .setTitle(`Thanks for adding me to your server!<:defi1:804797586438357003>`)
       .setColor("GOLD")
       .setDescription(`Thank you for adding me to your server! Akinator is a computer game and mobile app by French company Elokence. During gameplay, it attempts to determine what fictional or real-life character, object, film, television show, or animal the player is thinking of by asking a series of questions (like the game Twenty Questions) Check out Akinator's [website](https://bit.ly/akinator-discord). Get started by typing \`aki howto\`.`)
       .setThumbnail(`https://i.pinimg.com/originals/fe/e0/24/fee0246d3c4bddd06e95b41afbf13024.png`)
