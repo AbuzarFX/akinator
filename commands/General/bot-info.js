@@ -23,7 +23,7 @@ module.exports = {
 
 
 const embed = new MessageEmbed()
-            .setTitle('Bot Shard Stats')
+            .setAuthor("Shard Statistics", bot.user.displayAvatarURL())
             .setColor('GOLD')
             .setDescription(finale)
 
