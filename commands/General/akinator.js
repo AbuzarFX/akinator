@@ -1,7 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const { Aki } = require('aki-api');
 const { list, verify } = require('../../functions');
-const translate = require('@iamtraction/google-translate');
 const regions = ['person', 'object', 'animal'];
 
 module.exports = {
@@ -15,7 +14,7 @@ module.exports = {
 	},
 	run: async (bot, message, args, ops) => {
 		if (!message.channel.permissionsFor(bot.user).has('EMBED_LINKS')) return message.channel.send('**Missing Permissions - [EMBED LINKS]!**');
-		if (!args[0]) return message.channel.send(`**What Category Do You Want To Use? Either \`${list(regions, 'or')}\`!**\n\n**Example:** \`aki aki [person/object/animal]\``);
+		if (!args[0]) return message.channel.send(`**What Category Do You Want To Use? Either \`${list(regions, 'or')}\`!**`);
 		let stringAki = args[0].toLowerCase();
 		let region;
 		if (stringAki === 'person'.toLocaleLowerCase()) region = 'en';
@@ -55,8 +54,8 @@ module.exports = {
 					.setAuthor(message.author.username, "https://play-lh.googleusercontent.com/rjX8LZCV-MaY3o927R59GkEwDOIRLGCXFphaOTeFFzNiYY6SQ4a-B_5t7eUPlGANrcw")
 					.setColor('GOLD')
 					.setThumbnail("https://i.pinimg.com/originals/fe/e0/24/fee0246d3c4bddd06e95b41afbf13024.png")
-					.setDescription(`${await bot.translate(`**Q${aki.currentStep + 1} - ${aki.question}**`, message)}\n${aki.answers.join(' | ')}${aki.currentStep > 0 ? ` | Back` : ''} | End`)
-					.setFooter(`Yes/No ${await bot.translate(`To Confirm | Progress -`, message)} ${Math.round(Number.parseInt(aki.progress, 10))}%`)
+					.setDescription(`**Q${aki.currentStep + 1} - ${aki.question}**\n${aki.answers.join(' | ')}${aki.currentStep > 0 ? ` | Back` : ''} | End`)
+					.setFooter(`Yes/No To Confirm | Progress - ${Math.round(Number.parseInt(aki.progress, 10))}%`)
 				await message.channel.send(embed)
 				const filter = res => res.author.id === message.author.id && answers.includes(res.content.toLowerCase());
 				const messages = await message.channel.awaitMessages(filter, {
@@ -64,7 +63,7 @@ module.exports = {
 					time: 30000
 				});
 				if (!messages.size) {
-					await message.channel.send(`${await bot.translate(`**Time's Up!**`, message)}`);
+					await message.channel.send('**Time Up!**');
 					win = 'time';
 					break;
 				}
@@ -85,7 +84,7 @@ module.exports = {
 					await aki.win();
 					const guess = aki.answers.filter(g => !guessBlacklist.includes(g.id))[0];
 					if (!guess) {
-						await message.channel.send(`${await bot.translate('**I Can\'t Think of Anyone!**', message)}`);
+						await message.channel.send('**I Can\'t Think of Anyone!**');
 						win = true;
 						break;
 					}
@@ -93,10 +92,10 @@ module.exports = {
 					const embed = new MessageEmbed()
 						.setAuthor(message.author.username, "https://play-lh.googleusercontent.com/rjX8LZCV-MaY3o927R59GkEwDOIRLGCXFphaOTeFFzNiYY6SQ4a-B_5t7eUPlGANrcw")
 						.setColor('GOLD')
-						.setTitle(`${await bot.translate(`I'm ${Math.round(guess.proba * 100)}% Sure It's...`, message)}`)
-						.setDescription(`${await bot.translate(`**${guess.name}${guess.description ? `\nProfession - ${guess.description}` : ''}\nRanking - ${guess.ranking}\nType Yes/No To Confirm!**`, message)}`)
+						.setTitle(`I'm ${Math.round(guess.proba * 100)}% Sure It's...`)
+						.setDescription(`**${guess.name}${guess.description ? `\nProfession - ${guess.description}` : ''}\nRanking - ${guess.ranking}\nType Yes/No To Confirm!**`)
 						.setImage(guess.absolute_picture_path || null)
-						.setFooter(forceGuess ? `${await bot.translate('Final Guess', message)}` : `${await bot.translate(`Guesses - ${timesGuessed}`, message)}`);
+						.setFooter(forceGuess ? 'Final Guess' : `Guesses - ${timesGuessed}`);
 					await message.channel.send(embed);
 					const verification = await verify(message.channel, message.author);
 					if (verification === 0) {
@@ -106,8 +105,8 @@ module.exports = {
 						win = false;
 						break;
 					} else {
-						const exmessage = timesGuessed >= 3 || forceGuess ? `${await bot.translate(`I Give Up!`, message)}` : `${await bot.translate(`I Can Keep Going!`, message)}`;
-						await message.channel.send(`${await bot.translate(`**Hmm... Is That so? ${exmessage}**`, message)}`);
+						const exmessage = timesGuessed >= 3 || forceGuess ? 'I Give Up!' : 'I Can Keep Going!';
+						await message.channel.send(`**Hmm... Is That so? ${exmessage}**`);
 						if (timesGuessed >= 3 || forceGuess) {
 							win = true;
 							break;
@@ -116,9 +115,9 @@ module.exports = {
 				}
 			}
 			ops.games.delete(message.channel.id);
-			if (win === 'time') return message.channel.send(`${await bot.translate('**I Guess Your Silence Means I Have Won!**', message)}`);
-			if (win) return message.channel.send(`${await bot.translate('**You Have Defeated Me This Time!**', message)}`);
-			return message.channel.send(`${await bot.translate('**Guessed it right one more time! I loved playing with you!**', message)}<:defi1:804797586438357003>`);
+			if (win === 'time') return message.channel.send('**I Guess Your Silence Means I Have Won!**');
+			if (win) return message.channel.send('**You Have Defeated Me This Time!**');
+			return message.channel.send('Guessed it right one more time! I loved playing with you!<:defi1:804797586438357003>');
 		} catch (err) {
 			ops.games.delete(message.channel.id);
 			return message.channel.send(`**Server Down, Try again later!**`);
