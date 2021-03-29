@@ -37,9 +37,8 @@ module.exports = {
         const fourth = new MessageEmbed()
         .setTitle(`How to change the language?`)
         .setColor(`GOLD`)
-        .setDescription("**NEW!** To set Akinator's language to something other than english, use the command \`aki lang [full name of the language]\`")
-        .addField(`• Usage`, `\`aki lang spanish\``)
-        .setImage(`https://i.imgur.com/wKRnYNK.jpg`)
+        .setDescription("**NEW!** To set Akinator's language to something other than english, use the command \`aki aki person [Language code]\`")
+        .addField(`• Usage`, `\`aki aki person fr\``)
         .setTimestamp()
 
         const pages = [
