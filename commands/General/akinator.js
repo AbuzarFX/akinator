@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const { Aki } = require('aki-api');
 const { list, verify } = require('../../functions');
+const translate = require('@iamtraction/google-translate');
 const regions = ['person', 'object', 'animal'];
 
 module.exports = {
@@ -16,13 +17,14 @@ module.exports = {
 		if (!message.channel.permissionsFor(bot.user).has('EMBED_LINKS')) return message.channel.send('**Missing Permissions - [EMBED LINKS]!**');
 		if (!args[0]) return message.channel.send(`**What Category Do You Want To Use? Either \`${list(regions, 'or')}\`!**\n\n**Example:** \`aki aki [person/object/animal]\``);
 		let stringAki = args[0].toLowerCase();
-		let region;
-		if (stringAki === 'person'.toLocaleLowerCase()) region = 'en';
-		if (stringAki === 'object'.toLocaleLowerCase()) region = 'en_objects';
-		if (stringAki === 'animal'.toLocaleLowerCase()) region = 'en_animals';
+		let region = args[1]
+		if(!args[1]) args[1] = `en`;
+		if (stringAki === 'person'.toLocaleLowerCase()) region = args[1];
+		if (stringAki === 'object'.toLocaleLowerCase()) region = `${args[1]}_objects`;
+		if (stringAki === 'animal'.toLocaleLowerCase()) region = `${args[1]}_animals`;
 		if (!regions.includes(stringAki)) return message.channel.send(`**What Region Do You Want To Use? Either \`${list(regions, 'or')}\`!**\n\n**Example:** \`aki aki [person/object/animal]\``);
 		const current = ops.games.get(message.channel.id);
-		if (current) return message.channel.send(`**Please Wait Until The Current Game of \`${current.name}\` is Finished!**\n\nExample: \`aki aki person\``);
+		if (current) return message.channel.send(`**Please Wait Until The Current Game of \`${current.name}\` is Finished!**`);
 		try {
 			const aki = new Aki(region);
 			let ans = null;
@@ -63,7 +65,7 @@ module.exports = {
 					time: 30000
 				});
 				if (!messages.size) {
-					await message.channel.send('**Time Up!**');
+					await message.channel.send(`**Time's Up!**`);
 					win = 'time';
 					break;
 				}
@@ -92,7 +94,7 @@ module.exports = {
 					const embed = new MessageEmbed()
 						.setAuthor(message.author.username, "https://play-lh.googleusercontent.com/rjX8LZCV-MaY3o927R59GkEwDOIRLGCXFphaOTeFFzNiYY6SQ4a-B_5t7eUPlGANrcw")
 						.setColor('GOLD')
-						.setTitle(`I'm ${Math.round(guess.proba * 100)}% Sure It's...`)
+						.setTitle(`${await bot.translate(`I'm ${Math.round(guess.proba * 100)}% Sure It's...`, message)}`)
 						.setDescription(`**${guess.name}${guess.description ? `\nProfession - ${guess.description}` : ''}\nRanking - ${guess.ranking}\nType Yes/No To Confirm!**`)
 						.setImage(guess.absolute_picture_path || null)
 						.setFooter(forceGuess ? 'Final Guess' : `Guesses - ${timesGuessed}`);
@@ -105,7 +107,7 @@ module.exports = {
 						win = false;
 						break;
 					} else {
-						const exmessage = timesGuessed >= 3 || forceGuess ? 'I Give Up!' : 'I Can Keep Going!';
+						const exmessage = timesGuessed >= 3 || forceGuess ? `I Give Up!` : `I Can Keep Going!`;
 						await message.channel.send(`**Hmm... Is That so? ${exmessage}**`);
 						if (timesGuessed >= 3 || forceGuess) {
 							win = true;
@@ -115,9 +117,9 @@ module.exports = {
 				}
 			}
 			ops.games.delete(message.channel.id);
-			if (win === 'time') return message.channel.send('**I Guess Your Silence Means I Have Won!**');
-			if (win) return message.channel.send('**You Have Defeated Me This Time!**');
-			return message.channel.send('Guessed it right one more time! I loved playing with you!<:defi1:804797586438357003>');
+			if (win === 'time') return message.channel.send(`${await bot.translate('**I Guess Your Silence Means I Have Won!**', message)}`);
+			if (win) return message.channel.send(`${await bot.translate('**You Have Defeated Me This Time!**', message)}`);
+			return message.channel.send(`${await bot.translate('**Guessed it right one more time! I loved playing with you!**', message)}<:defi1:804797586438357003>`);
 		} catch (err) {
 			ops.games.delete(message.channel.id);
 			return message.channel.send(`**Server Down, Try again later!**`);
