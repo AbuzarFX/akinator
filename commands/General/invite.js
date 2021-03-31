@@ -1,6 +1,5 @@
 const { MessageEmbed } = require("discord.js");
 const { readdirSync } = require("fs");
-const db = require('quick.db');
 const { stripIndents } = require("common-tags");
 const { PREFIX } = require('../../config');
 
