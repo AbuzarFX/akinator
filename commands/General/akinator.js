@@ -95,7 +95,7 @@ module.exports = {
 					const embed = new MessageEmbed()
 						.setAuthor(message.author.username, "https://play-lh.googleusercontent.com/rjX8LZCV-MaY3o927R59GkEwDOIRLGCXFphaOTeFFzNiYY6SQ4a-B_5t7eUPlGANrcw")
 						.setColor('GOLD')
-						.setTitle(`${await bot.translate(`I'm ${Math.round(guess.proba * 100)}% Sure It's...`, message)}`)
+						.setTitle(`I'm ${Math.round(guess.proba * 100)}% Sure It's...`)
 						.setDescription(`**${guess.name}${guess.description ? `\nProfession - ${guess.description}` : ''}\nRanking - ${guess.ranking}\nType Yes/No To Confirm!**`)
 						.setImage(guess.absolute_picture_path || null)
 						.setFooter(forceGuess ? 'Final Guess' : `Guesses - ${timesGuessed}`);
