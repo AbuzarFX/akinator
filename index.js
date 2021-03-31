@@ -1,8 +1,8 @@
 const { Client, Collection, MessageEmbed } = require("discord.js")
 const bot = new Client();
+module.exports = bot;
 const { PREFIX, TOKEN } = require("./config")
-const db = require("quick.db")
-const translate = require("@iamtraction/google-translate")
+const db = require("./reconDB")
 const DBL = require("dblapi.js");
 
 //Defining Collections
@@ -25,8 +25,8 @@ bot.on("message", async message => {
     //Prefix fetching for each guild to support multi guild changeable prefix
     let prefix;
     try {
-        let fetch = await db.fetch(`prefix_${message.guild.id}`)
-        if(fetch === null) {
+        let fetch = await db.get(`prefix_${message.guild.id}`)
+        if(fetch === undefined) {
             prefix = PREFIX
         }
 
