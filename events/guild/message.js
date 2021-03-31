@@ -1,6 +1,4 @@
-
-
-const db = require('quick.db');
+const db = require('../../reconDB');
 const { PREFIX } = require('../../config');
 const games = new Map()
 
@@ -9,9 +7,9 @@ module.exports = async (bot, message) => {
         if (message.author.bot || message.channel.type === "dm") return;
 
         let prefix;
-        let fetched = await db.fetch(`prefix_${message.guild.id}`);
+        let fetched = await db.get(`prefix_${message.guild.id}`);
 
-        if (fetched === null) {
+        if (fetched === undefined) {
             prefix = PREFIX
         } else {
             prefix = fetched
