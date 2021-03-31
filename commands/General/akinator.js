@@ -17,8 +17,9 @@ module.exports = {
 		if (!message.channel.permissionsFor(bot.user).has('EMBED_LINKS')) return message.channel.send('**Missing Permissions - [EMBED LINKS]!**');
 		if (!args[0]) return message.channel.send(`**What Category Do You Want To Use? Either \`${list(regions, 'or')}\`!**\n\n**Example:** \`aki aki [person/object/animal]\``);
 		let stringAki = args[0].toLowerCase();
-		let region = args[1]
-		if(!args[1]) args[1] = `en`;
+		let region = args[1];
+		if(!args[1]) args[1] = `en`
+
 		if (stringAki === 'person'.toLocaleLowerCase()) region = args[1];
 		if (stringAki === 'object'.toLocaleLowerCase()) region = `${args[1]}_objects`;
 		if (stringAki === 'animal'.toLocaleLowerCase()) region = `${args[1]}_animals`;
@@ -117,12 +118,12 @@ module.exports = {
 				}
 			}
 			ops.games.delete(message.channel.id);
-			if (win === 'time') return message.channel.send(`${await bot.translate('**I Guess Your Silence Means I Have Won!**', message)}`);
-			if (win) return message.channel.send(`${await bot.translate('**You Have Defeated Me This Time!**', message)}`);
-			return message.channel.send(`${await bot.translate('**Guessed it right one more time! I loved playing with you!**', message)}<:defi1:804797586438357003>`);
+			if (win === 'time') return message.channel.send('**I Guess Your Silence Means I Have Won!**');
+			if (win) return message.channel.send('**You Have Defeated Me This Time!**');
+			return message.channel.send('Guessed it right one more time! I loved playing with you!<:defi1:804797586438357003>');
 		} catch (err) {
 			ops.games.delete(message.channel.id);
-			return message.channel.send(`**Server Down, Try again later!**`);
+			return message.channel.send(`**Invalid language code! Run: \`aki lang\` to get the list of language codes available!**`);
 		};
 	}
 };
