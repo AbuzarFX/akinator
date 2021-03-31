@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const { Aki } = require('aki-api');
 const { list, verify } = require('../../functions');
-const translate = require('@iamtraction/google-translate');
+
 const regions = ['person', 'object', 'animal'];
 
 module.exports = {
