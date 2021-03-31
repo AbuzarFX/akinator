@@ -1,4 +1,4 @@
-const db = require("quick.db")
+const db = require("../../reconDB")
 const { MessageEmbed } = require("discord.js")
 const { PREFIX } = require("../../config")
 
@@ -16,16 +16,16 @@ module.exports = {
 
             //PERMISSION
      if(!message.member.hasPermission("MANAGE_GUILD")) {
-                return message.channel.send("You are not allowed or do not have permission to change prefix")
+                return message.channel.send("You don't have the required permissions to use this command!")
               }
             
             if(!option) {
-                prefix = db.fetch(`prefix_${message.guild.id}`)
+                let prefix = await db.get(`prefix_${message.guild.id}`)
                 if (!prefix) prefix = PREFIX;
                 let prefEmbed = new MessageEmbed()
                 .setColor('YELLOW')
                 .setThumbnail(message.guild.iconURL())
-                .setDescription(`\nMy prefix for \`${message.guild.name}\`  is  **` + `  \`${prefix}\` \n**Type \`${prefix}help\` for help.`)
+                .setDescription(`My prefix for \`${message.guild.name}\`  is  **` + `  \`${prefix}\` \n**Type \`${prefix}help\` for help.`)
               
               message.channel.send(prefEmbed);
             }
