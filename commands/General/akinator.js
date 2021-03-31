@@ -123,7 +123,7 @@ module.exports = {
 			return message.channel.send('Guessed it right one more time! I loved playing with you!<:defi1:804797586438357003>');
 		} catch (err) {
 			ops.games.delete(message.channel.id);
-			return message.channel.send(`**Invalid language code! Run: \`aki lang\` to get the list of language codes available!**`);
+			return message.channel.send(err);
 		};
 	}
 };
