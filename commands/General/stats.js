@@ -17,7 +17,7 @@ module.exports = {
                 const totalMembers = results[1].reduce((acc, memberCount) => acc + memberCount, 0);
                 return message.channel.send({ embed: {
                     color: "GOLD",
-                    description: `> Server count: \`${totalGuilds}\` servers\n> Member count: \`${totalMembers}\` members`
+                    description: `> Server count: ${totalGuilds.toLocaleString()} servers\n> Member count: ${totalMembers.toLocaleString()} members`
                 }})
             })
             .catch(console.error);
