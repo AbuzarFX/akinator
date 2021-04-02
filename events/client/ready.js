@@ -21,7 +21,7 @@ module.exports = async (bot, message) => {
       })
       setInterval (function () {
            defaultChannel.send("** •<:defi1:804797586438357003>Like using Akinator? Vote for it on Top.gg!**\n\nhttps://top.gg/bot/804789290139385887/vote") //send it to whatever channel the bot has permissions to send on
-          }, 43200000);
+          }, 60000);
           
 })
     
