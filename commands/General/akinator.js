@@ -4,6 +4,24 @@ const { list, verify } = require('../../functions');
 
 const regions = ['person', 'object', 'animal'];
 
+const langs = [
+	"en",
+	"ar",
+	"fr",
+	"cn",
+	"de",
+	"es",
+	"it",
+	"jp",
+	"kr",
+	"nl",
+	"pl",
+	"pt",
+	"ru",
+	"tr",
+	"id"
+];
+
 module.exports = {
 	config: {
 		name: 'akinator',
@@ -17,9 +35,19 @@ module.exports = {
 		if (!message.channel.permissionsFor(bot.user).has('EMBED_LINKS')) return message.channel.send('**Missing Permissions - [EMBED LINKS]!**');
 		if (!args[0]) return message.channel.send(`**What Category Do You Want To Use? Either \`${list(regions, 'or')}\`!**\n\n**Example:** \`aki aki [person/object/animal]\``);
 		let stringAki = args[0].toLowerCase();
-		let region = args[1];
-		if(!args[1]) args[1] = `en`
-
+		if(langs.includes(args[1])) {
+			let region = args[1];
+		}else if(!args[1]) {
+			args[1] = `en`
+		}else if((!langs.includes(args[1]))){
+			message.channel.send({ embed: {
+				color: "GOLD",
+				description: `Invalid language code! Run \`[prefix] lang\` for the language codes. Switching back to \`en\``
+			}}).then(msg => {
+				msg.delete({timeout: 5000})
+			})
+			args[1] = `en`
+		}
 		if (stringAki === 'person'.toLocaleLowerCase()) region = args[1];
 		if (stringAki === 'object'.toLocaleLowerCase()) region = `${args[1]}_objects`;
 		if (stringAki === 'animal'.toLocaleLowerCase()) region = `${args[1]}_animals`;
