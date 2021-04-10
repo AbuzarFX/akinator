@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
     config: {
         name: 'stats',
+        aliases: ["stat"],
     },
     run: async (bot, message, args) => {
 
