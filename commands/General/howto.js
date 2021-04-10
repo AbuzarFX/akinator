@@ -41,11 +41,19 @@ module.exports = {
         .addField(`• Usage`, `\`aki aki person fr\``)
         .setTimestamp()
 
+        const fifth = new MessageEmbed()
+        .setTitle(`How to change the Prefix?`)
+        .setColor(`GOLD`)
+        .setDescription("**NEW!** TO change the default prefix of Akinator, use the command \`aki prefix [new prefix]\`")
+        .addField(`• Usage`, `\`aki prefix !aki\``)
+        .setTimestamp()
+
         const pages = [
             fourth,
             first,
             third,
-            second
+            second,
+            fifth
             
         ]
     
