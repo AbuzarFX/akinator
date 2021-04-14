@@ -10,12 +10,12 @@ module.exports = {
         const embed = new MessageEmbed()
         .setColor("GOLD")
         .setThumbnail(`https://i.pinimg.com/originals/fe/e0/24/fee0246d3c4bddd06e95b41afbf13024.png`)
-        .setDescription(`**Available Languages** :speech_balloon:\n\n
+        .setDescription(`**Available Languages** :speech_balloon:\n
 Akinator currently supports 15 languages. It is \`English\` by default. __**To use some other language, specify the language code in the end of the command**__.\n
 
         Example: \`aki aki person\` - For the default language- English.\n
 
-        Example: \`aki aki person fr\` - For French.
+        Example: \`aki aki person fr\` - For French.\n
         :flag_sa: \`ar\` Arabic - العربية\n
         :flag_cn: \`cn\` Chinese - 中文\n
         :flag_nl: \`nl\` Dutch - Nederlands\n
