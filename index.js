@@ -12,14 +12,7 @@ bot.aliases = new Collection();
 //Importing and setting collections for Command names and aliases
 ["commands", "aliases"].forEach(x => bot[x] = new Collection());
 ["command", "event"].forEach(x => require(`./handler/${x}`)(bot));
-const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwNDc4OTI5MDEzOTM4NTg4NyIsImJvdCI6dHJ1ZSwiaWF0IjoxNjE2NDI0ODkzfQ.SaWy2veV3q5P2OepcqrxdHEkdn0svXjfY15Nyi1ZgqE', bot);
-dbl.on('posted', () => {
-  console.log('Server count posted!');
-})
 
-dbl.on('error', e => {
- console.log(`Oops! ${e}`);
-})
 bot.on("message", async message => {
     
     //Prefix fetching for each guild to support multi guild changeable prefix
@@ -55,19 +48,6 @@ bot.on("message", async message => {
     }
 
 })
-
-
-bot.translate = async(text, message) => {
-
-        
-        const lang = await db.has(`lang-${message.guild.id}`) ? db.get(`lang-${message.guild.id}`) : 'en';
-        const translated = await translate(text, {from: 'en', to: lang})
-        return translated.text;
-        
-}
-
-
-
 
 bot.on("guildCreate", guild => {
 
@@ -117,3 +97,12 @@ bot.on('guildCreate', guild => {
 
 //Start the bot
 bot.login(TOKEN)
+
+const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgwNDc4OTI5MDEzOTM4NTg4NyIsImJvdCI6dHJ1ZSwiaWF0IjoxNjE2NDI0ODkzfQ.SaWy2veV3q5P2OepcqrxdHEkdn0svXjfY15Nyi1ZgqE', bot);
+dbl.on('posted', () => {
+  console.log('Server count posted!');
+})
+
+dbl.on('error', e => {
+ console.log(`Oops! ${e}`);
+})
