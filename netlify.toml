@@ -5,4 +5,4 @@ command = "node shard"
 NODE_VERSION = "14"
 
 [functions]
-directory = "/"
+directory = ""
