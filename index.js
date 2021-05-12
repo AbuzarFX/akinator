@@ -1,10 +1,11 @@
 const { Client, Collection, MessageEmbed } = require("discord.js")
+const Statcord = require("statcord.js");
 const bot = new Client();
 module.exports = bot;
 const { PREFIX, TOKEN } = require("./config")
 const db = require("./reconDB")
 const DBL = require("dblapi.js");
-
+require("discord-reply")
 //Defining Collections
 bot.commands = new Collection();
 bot.aliases = new Collection();
@@ -56,6 +57,12 @@ bot.on("message", async message => {
 
 })
 
+
+
+
+
+
+
 bot.on("guildCreate", guild => {
 
     const { MessageEmbed } = require("discord.js");
@@ -96,8 +103,8 @@ bot.on('guildCreate', guild => {
       .setColor("GOLD")
       .setDescription(`Thank you for adding me to your server! I will guess the person/object that you are thinking of! Check out Akinator's [website](https://bit.ly/akinator-discord). Get started by typing \`aki help\`.`)
       .setThumbnail(`https://i.pinimg.com/originals/fe/e0/24/fee0246d3c4bddd06e95b41afbf13024.png`)
-      .addField(`\u200b`, `[Support Server](https://discord.gg/PGew5Ysp4b) • [Invite Link](https://discord.com/oauth2/authorize?client_id=804789290139385887&permissions=8&scope=applications.commands%20bot) • [Vote](https://top.gg/bot/804789290139385887/vote)`)
-      .setFooter(`DM Abuser#2824 For Direct Assistance.`)
+      .addField(`\u200b`, `[Support Server](https://discord.gg/YpVQNV8ckH) • [Invite Link](https://discord.com/oauth2/authorize?client_id=804789290139385887&permissions=8&scope=applications.commands%20bot) • [Vote](https://top.gg/bot/804789290139385887/vote)`)
+      .setFooter(`DM Abuser#9999 For Direct Assistance.`)
     const channel = guild.channels.cache.find(channel => channel.type === 'text' && channel.permissionsFor(guild.me).has('SEND_MESSAGES', 'EMBED_LINKS'))
     channel.send(embed)
 })

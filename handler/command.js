@@ -23,5 +23,5 @@ module.exports = (bot) => {
             if (pull.config.aliases) pull.config.aliases.forEach(a => bot.aliases.set(a, pull.config.name));
           };
         };
-        ["General"].forEach(x => load(x));  //Name of all the command categories/modules
+        ["General", "Soundboard"].forEach(x => load(x));  //Name of all the command categories/modules
 };

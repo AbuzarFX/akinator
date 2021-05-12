@@ -17,7 +17,7 @@ module.exports = {
         let finale = "";
 
         promises.forEach((value) => {
-             finale += `\`Shard ${value[0]}:\`\n> Server Count: **${value[1].toLocaleString()}** | Users: **${value[2].toLocaleString()}** | Channels: **${value[3].toLocaleString()}** | Uptime: **${moment.duration(value[4]).format("d:hh:mm:ss")}** | Memory Usage: **${formatBytes(value[5])}**\n\n`;
+             finale += `\`Shard ${value[0]}:\`\n> Server Count: **${value[1].toLocaleString()}** | Channels: **${value[3].toLocaleString()}** | Uptime: **${moment.duration(value[4]).format("d:hh:mm:ss")}** | Memory Usage: **${formatBytes(value[5])}**\n`;
         });
 
 

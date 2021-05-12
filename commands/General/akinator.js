@@ -148,7 +148,10 @@ module.exports = {
 			ops.games.delete(message.channel.id);
 			if (win === 'time') return message.channel.send('**I Guess Your Silence Means I Have Won!**');
 			if (win) return message.channel.send('**You Have Defeated Me This Time!**');
-			return message.channel.send('Guessed it right one more time! I loved playing with you!<:defi1:804797586438357003>');
+			return message.channel.send({ embed: {
+                color: "GOLD",
+                description: 'Guessed it right one more time! I loved playing with you!<:defi1:804797586438357003>'
+            }});
 		} catch (err) {
 			ops.games.delete(message.channel.id);
 			return message.channel.send(err);

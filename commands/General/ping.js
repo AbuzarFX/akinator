@@ -1,16 +1,20 @@
-//ping command
+
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
     config: {
         name: "ping",
-        description: "to check the ping of the bot",
-        aliases: []
     },
-    run: async (bot, msg, args) => {
-        
-        msg.channel.send(`<:defi1:804797586438357003>Bot ping: **${bot.ws.ping}ms**`);
-
-    }
-
-} 
+    run: async (bot, message, args) => {
 
 
+    const botLatency = (bot.ws.ping)
+    const shardLatency = (message.guild.shard.ping);
+    
+    const embed = new MessageEmbed()
+	.setColor("GOLD")
+    .setDescription(`**Bot ping**: ${botLatency}ms\n**Shard #${message.guild.shard.id} ping**: ${shardLatency}ms`)
+    message.channel.send(embed)
+  }
+    
+}

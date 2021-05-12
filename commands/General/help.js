@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const { readdirSync } = require("fs");
+const db = require('../../reconDB');
 const { stripIndents } = require("common-tags");
 const { PREFIX } = require('../../config');
 
@@ -13,19 +14,53 @@ module.exports = {
         accessableby: "everyone"
     },
     run: async (bot, message, args) => {
+        let prefix;
+        let fetched = await db.get(`prefix_${message.guild.id}`);
+
+        if (fetched === undefined) {
+            prefix = PREFIX
+        } else {
+            prefix = fetched
+        }
 
         const embed = new MessageEmbed()
-        .setColor("GOLD")
-        .setAuthor(message.author.username, "https://play-lh.googleusercontent.com/rjX8LZCV-MaY3o927R59GkEwDOIRLGCXFphaOTeFFzNiYY6SQ4a-B_5t7eUPlGANrcw")
-        .setTitle(`Akinator Help | Commands`)
-        .setDescription(`Akinator is a computer game and mobile app by French company Elokence. During gameplay, it attempts to determine what fictional or real-life character, object, film, television show, or animal the player is thinking of by asking a series of questions (like the game Twenty Questions). Check out Akinator's [website](https://bit.ly/akinator-discord).\n\n\n<:defi1:804797586438357003> \`aki lang\` - Learn how to change the language of the bot.\n\n<:defi1:804797586438357003> \`aki vote\` - Returns the vote links of Akinator.\n\n<:defi1:804797586438357003> \`aki prefix\` - Change the prefix of Akinator!\n\n<:defi1:804797586438357003> \`aki ping\` - Returns the ping of the bot.\n\n<:defi1:804797586438357003> \`aki info\` - Returns the information of the bot.\n\n<:defi1:804797586438357003> \`aki akinator [person, object, animal]\` - Starts the Akinator Game!\n\n<:defi1:804797586438357003> \`end\` - Ends the current akinator game.\n\n<:defi1:804797586438357003> \`aki invite [inv]\` - Returns the invite link of Akinator.\n\nYou'll understand the rest of the game as you go with it. Have fun! <:defi1:804797586438357003> `)
-        .setThumbnail("https://i.pinimg.com/originals/fe/e0/24/fee0246d3c4bddd06e95b41afbf13024.png")
-        .setImage(`https://i.imgur.com/WsNXfAs.jpg`)
-        .addField(`\u200b`, `[Support Server](https://discord.gg/PGew5Ysp4b) • [Invite Link](https://discord.com/oauth2/authorize?client_id=804789290139385887&permissions=8&scope=applications.commands%20bot) • [Vote](https://top.gg/bot/804789290139385887/vote)`)
-        .setTimestamp()
+            .setColor("GOLD")
+            .setAuthor(`${message.guild.me.displayName} Help`, message.guild.iconURL())
+            .setThumbnail(bot.user.displayAvatarURL())
 
-        message.channel.send(embed)
+        if (!args[0]) {
 
+            const embed = new MessageEmbed()
+            .setColor("GOLD")
+            .setTitle(`Akinator`)
+            .setDescription(`Akinator is a computer game and mobile app by French company Elokence. Check out Akinator's [website](https://bit.ly/akinator-website) and the list of [commands](https://bit.ly/akinator-commands). Run \`${prefix}howto\` to know how the game works.\n\n`)
+            .addField(`<:config:839925938803310622> Configuration`, `\`prefix\``)
+            .addField(`<:languages:837404761707774023> Languages`, `\`lang\``)
+            .addField(`<:defi1:804797586438357003> Main`, `\`aki [person/object/animal]\` - \`test\` - \`end\` - \`soundboard\``)
+            .addField(`<:DISCORD_EMPLOYEE:809729720756863016> Moderator commands\n`, `\`serverinfo\` - \`userinfo\` - \`roleinfo\` - \`channelinfo\` - \`poll\` - \`uptime\``)
+            .addField(`<:sound:840303620737728523> Soundboard`, `\`ahh\` - \`alia\` - \`copystrike\` - \`daddy\` - \`depress\` - \`firefly\` - \`fucknig\` - \`jeff\` - \`lambo\` - \`leave\` - \`moan\` - \`nani\` - \`ohh\` - \`reee\` - \`seinfeld\` - \`shrimp\` - \`shutdown\` - \`spaghet\` - \`startup\` - \`suckyourmum\` - \`thomas\` - \`yeet\` - \`zedther\``)
+            .addField(`:file_folder:  Miscellaneous`, `\`ping\` - \`stats\` - \`info\` - \`invite\` - \`vote\` - \`donate\` - \`fans\` - \`os\``)
+            .addField(`\u200b`, `Run \`${prefix}help <command>\` to know more about the command.`)
+            .setThumbnail(`https://i.pinimg.com/originals/fe/e0/24/fee0246d3c4bddd06e95b41afbf13024.png`)
+            .setImage(`https://i.imgur.com/WsNXfAs.jpg`)
+        
+            message.lineReply(embed)
 
+        } else {
+            let command = bot.commands.get(bot.aliases.get(args[0].toLowerCase()) || args[0].toLowerCase())
+            if (!command) return message.channel.send(embed.setTitle("**Invalid Command!**").setDescription(`**Do \`${prefix}help\` For the List Of the Commands!**`))
+            command = command.config
+            embed.setDescription(stripIndents`**The Bot's Global Prefix Is \`${PREFIX}\`**\n
+            **Server Prefix Is \`${prefix}\`**\n
+            ** Command -** ${command.name.slice(0, 1).toUpperCase() + command.name.slice(1)}\n
+            ** Description -** ${command.description || "No Description provided."}\n
+            **Category -** ${command.category}\n
+            ** Usage -** ${command.usage ? `\`${prefix}${command.name} ${command.usage}\`` : "No Usage"}\n
+            ** Accessible by -** ${command.accessableby || "everyone"}\n
+            ** Aliases -** ${command.aliases ? command.aliases.join(", ") : "None."}`)
+            embed.setFooter(message.guild.name, message.guild.iconURL())
+
+            return message.channel.send(embed)
+        }
     }
-}
+};
